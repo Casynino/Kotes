@@ -1,0 +1,244 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   Design tokens
+   --------------------------------------------------------------------------
+   Every colour, font, radius and shadow used in the UI is declared here.
+   Rebranding the site is a matter of editing this block — no component holds
+   a raw hex value.
+   ========================================================================== */
+
+@theme {
+  /* -- Brand ------------------------------------------------------------- */
+  /* Derived from the KOTES globe mark: cyan-blue primary, deep navy ink,
+     red accent from the "K" monogram. */
+  --color-brand-50: #eef8ff;
+  --color-brand-100: #d9efff;
+  --color-brand-200: #bbe4ff;
+  --color-brand-300: #8bd4ff;
+  --color-brand-400: #52bcfd;
+  --color-brand-500: #1ea6ef;
+  --color-brand-600: #0d87d0;
+  --color-brand-700: #0c6ba9;
+  --color-brand-800: #105b8b;
+  --color-brand-900: #134c73;
+  --color-brand-950: #0d304c;
+
+  /* -- Ink (navy neutrals used for text and dark sections) --------------- */
+  --color-ink-50: #f5f7fa;
+  --color-ink-100: #e9edf3;
+  --color-ink-200: #cfd8e4;
+  --color-ink-300: #a6b6cb;
+  --color-ink-400: #758dab;
+  --color-ink-500: #547091;
+  --color-ink-600: #405878;
+  --color-ink-700: #354761;
+  --color-ink-800: #2f3d52;
+  --color-ink-900: #0f2036;
+  --color-ink-950: #071426;
+
+  /* -- Accent ------------------------------------------------------------ */
+  --color-accent-500: #e0393c;
+  --color-accent-600: #c92a2d;
+
+  /* -- Semantic ---------------------------------------------------------- */
+  --color-surface: #ffffff;
+  --color-surface-muted: #f6f9fc;
+  --color-surface-sunken: #eef3f8;
+  --color-border-subtle: #e3ebf3;
+  --color-success-600: #0f8a5f;
+  --color-warning-600: #b46a00;
+  --color-danger-600: #c92a2d;
+
+  /* -- Typography -------------------------------------------------------- */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-jakarta), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* Fluid type scale — clamps so headings breathe on large screens
+     without a single media query. */
+  --text-display: clamp(2.5rem, 1.6rem + 3.8vw, 4.5rem);
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.03em;
+
+  --text-h1: clamp(2.125rem, 1.5rem + 2.6vw, 3.5rem);
+  --text-h1--line-height: 1.1;
+  --text-h1--letter-spacing: -0.025em;
+
+  --text-h2: clamp(1.75rem, 1.35rem + 1.7vw, 2.625rem);
+  --text-h2--line-height: 1.15;
+  --text-h2--letter-spacing: -0.02em;
+
+  --text-h3: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --text-h3--line-height: 1.3;
+  --text-h3--letter-spacing: -0.01em;
+
+  --text-lead: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
+  --text-lead--line-height: 1.65;
+
+  /* -- Radii ------------------------------------------------------------- */
+  --radius-card: 1rem;
+  --radius-panel: 1.5rem;
+
+  /* -- Elevation --------------------------------------------------------- */
+  --shadow-card: 0 1px 2px rgba(15, 32, 54, 0.04), 0 8px 24px -12px rgba(15, 32, 54, 0.14);
+  --shadow-card-hover: 0 2px 4px rgba(15, 32, 54, 0.05), 0 24px 48px -20px rgba(15, 32, 54, 0.28);
+  --shadow-header: 0 1px 0 rgba(15, 32, 54, 0.06), 0 8px 24px -16px rgba(15, 32, 54, 0.3);
+
+  /* -- Motion ------------------------------------------------------------ */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-fade-up: fade-up 0.7s var(--ease-out-soft) both;
+  --animate-fade-in: fade-in 0.6s var(--ease-out-soft) both;
+  --animate-marquee: marquee 40s linear infinite;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translate3d(0, 1.25rem, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+@layer base {
+  * {
+    border-color: var(--color-border-subtle);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Offset anchor targets so the sticky header never covers a heading. */
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-surface);
+    color: var(--color-ink-900);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-wrap: balance;
+  }
+
+  p, li {
+    text-wrap: pretty;
+  }
+
+  /* Visible, high-contrast focus ring on every interactive element. */
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 3px solid var(--color-brand-600);
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+  }
+
+  /* Respect the user's motion preference across every animation. */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  ::selection {
+    background-color: var(--color-brand-600);
+    color: #ffffff;
+  }
+}
+
+/* ==========================================================================
+   Component utilities
+   ========================================================================== */
+
+@utility container-page {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 80rem;
+  padding-inline: 1.25rem;
+
+  @media (min-width: 768px) {
+    padding-inline: 2rem;
+  }
+
+  @media (min-width: 1280px) {
+    padding-inline: 2.5rem;
+  }
+}
+
+/* Skip link, visible only when focused. */
+@utility skip-link {
+  position: absolute;
+  left: 1rem;
+  top: 0.5rem;
+  z-index: 100;
+  transform: translateY(-150%);
+  transition: transform 0.2s var(--ease-out-soft);
+
+  &:focus-visible {
+    transform: translateY(0);
+  }
+}
+
+/* Subtle engineered grid used behind dark sections. */
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+@utility bg-grid-light {
+  background-image:
+    linear-gradient(to right, rgba(15, 32, 54, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 32, 54, 0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+/* Scroll-triggered reveal. Elements start hidden and are revealed by the
+   Reveal component's IntersectionObserver; if JS never runs they stay visible
+   because the observer sets the class, and the fallback below applies. */
+@utility reveal {
+  opacity: 0;
+  transform: translate3d(0, 1.5rem, 0);
+  transition:
+    opacity 0.7s var(--ease-out-soft),
+    transform 0.7s var(--ease-out-soft);
+  will-change: opacity, transform;
+}
+
+@utility reveal-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* No JavaScript: never leave content invisible. */
+.no-js .reveal {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
